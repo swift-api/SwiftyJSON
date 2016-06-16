@@ -25,13 +25,13 @@ import SwiftyJSON
 
 class PerformanceTests: XCTestCase {
 
-    var testData: NSData!
+    var testData: Data!
     
     override func setUp() {
         super.setUp()
         
-        if let file = NSBundle(for:PerformanceTests.self).pathForResource("Tests", ofType: "json") {
-            self.testData = NSData(contentsOfFile: file)
+        if let file = Bundle(for:PerformanceTests.self).pathForResource("Tests", ofType: "json") {
+            self.testData = Data(contentsOfFile: file)
         } else {
             XCTFail("Can't find the test JSON file")
         }
