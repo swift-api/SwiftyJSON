@@ -954,12 +954,12 @@ extension JSON: Swift.RawRepresentable {
         }
     }
 #else
-    public func rawString(_ encoding: UInt = String.Encoding.utf8, options opt: JSONSerialization.WritingOptions = .prettyPrinted) -> String? {
+    public func rawString(_ encoding: String.Encoding = String.Encoding.utf8, options opt: JSONSerialization.WritingOptions = .prettyPrinted) -> String? {
         switch self.type {
         case .array, .dictionary:
             do {
                 let data = try self.rawData(options: opt)
-                return NSString(data: data, encoding: encoding) as? String
+                return String(data: data, encoding: encoding)
             } catch _ {
                 return nil
             }
@@ -1332,7 +1332,7 @@ extension JSON {
                     return nil
                 }
 #else 
-                guard let encodedString_ = self.rawString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed()) else {
+                guard let encodedString_ = self.rawString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) else {
                     return nil
                 }
 #endif
@@ -1402,7 +1402,7 @@ extension JSON {
 
     public var int: Int? {
         get {
-            return self.number?.int32Value
+            return self.number?.intValue
         }
         set {
             if let newValue = newValue {
